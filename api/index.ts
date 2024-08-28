@@ -1,20 +1,15 @@
 import express, { ErrorRequestHandler } from 'express'
-import cache from 'memory-cache'
 import cors from 'cors'
 import compression from 'compression'
 
 import {
-  NestedResponse as ApiNestedResponse,
   Response as ApiResponse,
-  scrapeGitHubContributions,
+  scrapeContributions,
   UserNotFoundError,
 } from './scrape'
 
 export interface ParsedQuery {
-  years: Array<number>
-  fetchAll: boolean
-  lastYear: boolean
-  format: QueryParams['format']
+  weeks: number
 }
 
 interface Params {
@@ -22,13 +17,12 @@ interface Params {
 }
 
 interface QueryParams {
-  y?: string | Array<string>
-  format?: 'nested'
+  weeks?: string
 }
 
 type Request = express.Request<
   Params,
-  ApiResponse | ApiNestedResponse | { error: string },
+  ApiResponse | { error: string },
   {},
   QueryParams
 >
@@ -40,50 +34,22 @@ app.use(compression())
 
 app.get('/', (_req, res) => {
   res.send(
-    '<p>Welcome to the GitHub contributions API!. Please visit <b>/v4/:username</b> to get the contributions data.</p>',
+    '<p>Welcome to the Week based GitHub contributions API!. Please visit <b>/:username?weeks=x</b></p>',
   )
 })
 
-app.get('/v4/:username', async (req: Request, res, next) => {
+app.get('/:username', async (req: Request, res, next) => {
   const { username } = req.params
+  const { weeks } = req.query
 
-  if (req.query.format && req.query.format !== 'nested') {
+  if (!weeks) {
     return res.status(400).send({
-      error: "Query parameter 'format' must be 'nested' or undefined",
+      error: "Query parameter 'weeks' must be an integer.",
     })
-  }
-
-  const years =
-    req.query.y != null
-      ? typeof req.query.y === 'string'
-        ? [req.query.y]
-        : req.query.y
-      : []
-
-  if (years.some((y) => !/^\d+$/.test(y) && y !== 'all' && y !== 'last')) {
-    return res.status(400).send({
-      error: "Query parameter 'y' must be an integer, 'all' or 'last'",
-    })
-  }
-
-  const query: ParsedQuery = {
-    years: years.map((y) => parseInt(y)).filter(isFinite),
-    fetchAll: years.includes('all') || years.length === 0,
-    lastYear: years.includes('last'),
-    format: req.query.format,
-  }
-
-  const key = `${username}-${JSON.stringify(query)}`
-  const cached = cache.get(key)
-
-  if (cached !== null) {
-    return res.json(cached)
   }
 
   try {
-    const response = await scrapeGitHubContributions(username, query)
-    cache.put(key, response, 1000 * 3600) // Store for an hour
-
+    const response = await scrapeContributions(username, parseInt(weeks))
     return res.json(response)
   } catch (error) {
     if (error instanceof UserNotFoundError) {

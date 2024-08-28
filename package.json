@@ -1,8 +1,8 @@
 {
-  "name": "github-contribution-api",
-  "description": "Scrape contribution data of a Github user",
+  "name": "minimal-github-contribution-api",
+  "description": "Scrape minimal contribution data of a Github user",
   "version": "4.7.2",
-  "author": "Jonathan Gruber <gruberjonathan@gmail.com>",
+  "author": "Harry High Pants <hey@harryab.com>",
   "license": "MIT",
   "private": true,
   "main": "api/server.ts",
@@ -19,16 +19,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grubersjoe/github-contributions-api.git"
+    "url": "git+https://github.com/harryhighpants/github-contributions-api.git"
   },
   "bugs": {
-    "url": "git+https://github.com/grubersjoe/github-contributions-api.git"
+    "url": "git+https://github.com/harryhighpants/github-contributions-api.git"
   },
   "keywords": [
     "github",
     "contributions",
     "api",
-    "node"
+    "node",
+    "minimal"
   ],
   "dependencies": {
     "cheerio": "^1.0.0",
@@ -36,7 +37,6 @@
     "cors": "^2.8.4",
     "domhandler": "^5.0.3",
     "express": "^4.19.2",
-    "memory-cache": "^0.2.0",
     "rotating-file-stream": "^3.2.3"
   },
   "devDependencies": {
@@ -46,7 +46,6 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
-    "@types/memory-cache": "^0.2.6",
     "@types/node": "^22.2.0",
     "@types/supertest": "^6.0.2",
     "husky": "^9.1.4",
