@@ -40,7 +40,7 @@ app.use(compression())
 
 app.get('/', (_req, res) => {
   res.send(
-    'Welcome to the GitHub contributions API!. Please visit /v4/:username to get the contributions data.',
+    '<p>Welcome to the GitHub contributions API!. Please visit <b>/v4/:username</b> to get the contributions data.</p>',
   )
 })
 

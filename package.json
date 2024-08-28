@@ -5,19 +5,15 @@
   "author": "Jonathan Gruber <gruberjonathan@gmail.com>",
   "license": "MIT",
   "private": true,
-  "main": "api/server.js",
-  "outDir": "api",
+  "main": "api/server.ts",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "build": "rm -rf api/* && tsc",
-    "dev": "nodemon src/server.ts --exec ts-node src/server.ts",
+    "dev": "nodemon api/server.ts --exec ts-node api/server.ts",
     "format": "prettier --write .",
     "prepare": "husky",
-    "postinstall": "npm run build",
-    "prestart": "npm run build",
-    "start": "node api/server.js",
+    "start": "ts-node api/server.ts",
     "test": "jest",
     "typecheck": "tsc"
   },

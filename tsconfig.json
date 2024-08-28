@@ -1,12 +1,12 @@
 {
-  "include": ["src"],
+  "include": ["api"],
   "compilerOptions": {
     "esModuleInterop": true,
     "lib": ["ES2023"],
     "module": "commonjs",
     "target": "ES2022",
     "moduleResolution": "node",
-    "outDir": "api",
+    "outDir": "build",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
