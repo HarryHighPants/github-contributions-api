@@ -38,6 +38,12 @@ const app = express()
 app.use(cors())
 app.use(compression())
 
+app.get('/', (_req, res) => {
+  res.send(
+    'Welcome to the GitHub contributions API!. Please visit /v4/:username to get the contributions data.',
+  )
+})
+
 app.get('/v4/:username', async (req: Request, res, next) => {
   const { username } = req.params
 

@@ -6,7 +6,7 @@
     "module": "commonjs",
     "target": "ES2022",
     "moduleResolution": "node",
-    "outDir": "build",
+    "outDir": "api",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
