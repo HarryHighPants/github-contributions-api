@@ -2,7 +2,8 @@ import { fromURL } from 'cheerio'
 
 import { Element } from 'domhandler'
 
-type Level = 0 | 1 | 2 | 3 | 4
+// -1 is padded days that haven't occured this week
+type Level = -1 | 0 | 1 | 2 | 3 | 4
 export type Response = Level[]
 
 const requestOptions = (username: string) =>
@@ -36,7 +37,7 @@ export async function scrapeContributions(
   const daysToPad = (sortedDays.length % 7) - 1
   const relevantDays = sortedDays.slice(-weeks * 7 + daysToPad)
   var parsedDays = relevantDays.map((day) => parseDay(day))
-  parsedDays.push(...Array(daysToPad).fill(0))
+  parsedDays.push(...Array(daysToPad).fill(-1))
 
   return parsedDays
 }
