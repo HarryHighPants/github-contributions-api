@@ -32,9 +32,13 @@ export async function scrapeContributions(
     return dateA.localeCompare(dateB, 'en')
   })
 
-  const relevantDays = sortedDays.slice(-weeks * 7)
+  // Pad the days left in the week to make sure we have full weeks
+  const daysToPad = (sortedDays.length % 7) - 1
+  const relevantDays = sortedDays.slice(-weeks * 7 + daysToPad)
+  var parsedDays = relevantDays.map((day) => parseDay(day))
+  parsedDays.push(...Array(daysToPad).fill(0))
 
-  return relevantDays.map((day) => parseDay(day))
+  return parsedDays
 }
 
 const parseDay = (day: Element) => {
