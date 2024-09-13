@@ -34,7 +34,10 @@ export async function scrapeContributions(
   })
 
   // Pad the days left in the week to make sure we have full weeks
-  const daysToPad = (sortedDays.length % 7) - 1
+  // E.g if today is Thursday, we need to pad 2 days so that the last item in the array is always a Saturday
+  // Sun, Mon, Tues, Wed, Thurs, Fri, Sat
+  const today = new Date(sortedDays[sortedDays.length - 1].attribs['data-date'])
+  const daysToPad = 6 - today.getDay()
   const relevantDays = sortedDays.slice(-weeks * 7 + daysToPad)
   var parsedDays = relevantDays.map((day) => parseDay(day))
   parsedDays.push(...Array(daysToPad).fill(-1))
