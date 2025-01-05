@@ -5,15 +5,15 @@
   "author": "Harry High Pants <hey@harryab.com>",
   "license": "MIT",
   "private": true,
-  "main": "api/server.ts",
+  "main": "api/index.ts",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "nodemon api/server.ts --exec ts-node api/server.ts",
+    "dev": "nodemon api/index.ts --exec ts-node api/index.ts",
     "format": "prettier --write .",
     "prepare": "husky",
-    "start": "ts-node api/server.ts",
+    "start": "ts-node api/index.ts",
     "test": "jest",
     "typecheck": "tsc"
   },
